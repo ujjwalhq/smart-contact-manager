@@ -26,4 +26,22 @@ public class PageController {
     public String services(){
         return "services";
     }
+
+     //Service Route
+     @GetMapping("/contacts")
+    public String contacts(){
+        return "contacts";
+    }
+
+     //Service Route
+     @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+     //Service Route
+     @GetMapping("/signup")
+    public String signup(){
+        return "signup";
+    }
 }
