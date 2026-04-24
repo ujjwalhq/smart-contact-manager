@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* Tell Tailwind where your HTML files are */
+@source "../../templates/**/*.html";

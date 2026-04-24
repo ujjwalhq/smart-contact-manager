@@ -1,0 +1,12 @@
+<div class="parent-fragment" th:fragment="parent(x,y)">
+  <h1>This is Parent Fragment</h1>
+  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. A accusantium libero asperiores cum eius quidem, quae perferendis aspernatur, reprehenderit non saepe provident id incidunt labore nobis eveniet accusamus, tempora velit.</p>
+  <h1>My name is <span th:text="${x}"></span>. and I am <span th:text="${y}"></span> Year Old.</h1>
+</div>
+
+
+<div th:fragment="secondFrag(content)">
+  <hr>
+  <h1>This is From Services Page</h1>
+  <div th:replace="${content}"></div>
+</div>
