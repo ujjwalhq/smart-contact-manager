@@ -1,4 +1,4 @@
 @import "tailwindcss";
 
-/* Tell Tailwind where your HTML files are */
+/* Scan your HTML */
 @source "../../templates/**/*.html";
