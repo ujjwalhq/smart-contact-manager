@@ -1,12 +1,21 @@
-<div class="parent-fragment" th:fragment="parent(x,y)">
-  <h1>This is Parent Fragment</h1>
-  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. A accusantium libero asperiores cum eius quidem, quae perferendis aspernatur, reprehenderit non saepe provident id incidunt labore nobis eveniet accusamus, tempora velit.</p>
-  <h1>My name is <span th:text="${x}"></span>. and I am <span th:text="${y}"></span> Year Old.</h1>
-</div>
+<!DOCTYPE html>
+<html lang="en" th:fragment="parent(content,title)" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${title}"></title>
+  <link rel="stylesheet" data-th-href="@{/css/output.css}">
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+</head>
 
-<div th:fragment="secondFrag(content)">
-  <hr>
-  <h1>This is From Services Page</h1>
+<body>
+  <h1>Base Layout</h1>
+
+  <!-- dynamic content -->
   <div th:replace="${content}"></div>
-</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+</body>
+
+</html>

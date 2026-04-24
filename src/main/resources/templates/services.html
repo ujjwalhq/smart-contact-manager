@@ -1,22 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" th:replace="~{base :: parent(~{::#content}, 'Services')}">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Services</title>
+  
 </head>
-
 <body>
-  <h1>This is Services Page</h1>
-
-  <!----use g=fragment-->
-  <div th:insert="~{base :: secondFrag(~{::section})}">
-    <section>
-      <h1>Click This button</h1>
-      <button>Click Here</button>
-      </section>
+  <div id="content">
+    <h1>Welcome to Services Page</h1>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam dignissimos et hic ea esse dolorem quae repudiandae, aut dicta nostrum optio amet quos ab eligendi magni praesentium ad culpa sunt!</p>
   </div>
 </body>
-
 </html>

@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th:replace="~{base :: parent(~{::#content}, 'About')}">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About</title>
+  
 </head>
 <body>
-  <h1>This is about page</h1>
-  <hr>
-  <!---using fragment -->
-  <div class="host-tag" th:insert="~{base :: parent('Ujjwal','22')}"></div><br><hr>
-  <div class="host-tag" th:insert="~{base :: parent('Abhay','25')}"></div>
+  <div id="content">
+    <h1>Welcome to About Page</h1>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam dignissimos et hic ea esse dolorem quae repudiandae, aut dicta nostrum optio amet quos ab eligendi magni praesentium ad culpa sunt!</p>
   </div>
 </body>
 </html>
