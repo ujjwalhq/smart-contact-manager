@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content}, 'Signup',~{})}">
+
+<head>
+
+</head>
+
+<body>
+  <div id="content">
+
+  <div class="min-h-screen flex items-center justify-center px-4">
+
+    <div class="w-full max-w-md">
+
+      <!-- card -->
+      <div
+        class="block p-6 border-t-10 border-blue-700 bg-white rounded-xl shadow 
+               hover:bg-gray-100 dark:bg-gray-800 dark:border-blue-700 dark:hover:bg-gray-700"
+      >
+
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Signup Here
+        </h5>
+
+        <p class="font-normal text-gray-400 dark:text-gray-400">
+          Start managing contacts on cloud ...
+        </p>
+
+        <!-- form -->
+        <form data-th-action="@{'/do-register'}" 
+        method="post" 
+        data-th-object="${userForm}"
+        class="mt-5" 
+        novalidate>
+
+          <!-- Name -->
+          <div class="mb-3">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Name
+            </label>
+            <input type="text" name="name" id="name" data-th-field="*{name}"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5
+                     focus:ring-blue-500 focus:border-blue-500
+                     dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              placeholder="Enter here" required>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Email
+            </label>
+            <input type="email" name="email" id="email" data-th-field="*{email}"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5
+                     focus:ring-blue-500 focus:border-blue-500
+                     dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              placeholder="email" required>
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              New Password
+            </label>
+            <input type="password" name="password" id="password" data-th-field="*{password}"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5
+                     focus:ring-blue-500 focus:border-blue-500
+                     dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              required>
+          </div>
+
+          <!-- Phone -->
+          <div class="mb-3">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Contact Number
+            </label>
+            <input type="text" name="phoneNumber" id="phoneNumber" data-th-field="*{phoneNumber}"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5
+                     focus:ring-blue-500 focus:border-blue-500
+                     dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              required>
+          </div>
+
+          <!-- About -->
+          <div class="mb-3">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Write something about yourself
+            </label>
+            <textarea name="about" rows="5" id="about" data-th-field="*{about}"
+              class="block w-full p-2.5 text-sm bg-gray-50 border border-gray-300 rounded-lg
+                     focus:ring-blue-500 focus:border-blue-500
+                     dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              placeholder="Write here..."></textarea>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex justify-center space-x-3 mt-4">
+            <button type="submit"
+              class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white">
+              Signup
+            </button>
+
+            <button type="reset"
+              class="px-4 py-2 rounded bg-orange-600 hover:bg-orange-700 text-white">
+              Reset
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</body>
+
+</html>
