@@ -1,5 +1,7 @@
 package com.scm.peopledesk.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,12 +9,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.scm.peopledesk.entities.User;
 import com.scm.peopledesk.forms.UserForm;
+import com.scm.peopledesk.services.UserService;
 
 
 
 @Controller
 public class PageController {
+
+    @Autowired
+    private UserService userService;
+
    @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("name","Ujjwal");
@@ -69,6 +77,19 @@ public class PageController {
         //save to database
 
         //userservice
+        
+       User user= User.builder()
+       .name(userForm.getName())
+       .email(userForm.getEmail())
+       .password(userForm.getPassword())
+       .about(userForm.getAbout())
+       .phoneNumber(userForm.getPhoneNumber())
+       .profilePic("https://img.icons8.com/nolan/1200/user-default.jpg")
+       .build();
+
+
+        User savedUser= userService.saveUser(user);
+        System.out.print("User Saved");
 
         //message = "Registration Successful"
         //redirect to login page
