@@ -78,7 +78,7 @@ public class PageController {
 
         //userservice
         
-       User user= User.builder()
+     /*  User user= User.builder()
        .name(userForm.getName())
        .email(userForm.getEmail())
        .password(userForm.getPassword())
@@ -87,7 +87,18 @@ public class PageController {
        .profilePic("https://img.icons8.com/nolan/1200/user-default.jpg")
        .build();
 
+       */
 
+       User user = new User();
+       user.setName(userForm.getName());
+       user.setEmail(userForm.getEmail());
+       user.setPassword(userForm.getPassword());
+       user.setAbout(userForm.getAbout());
+       user.setPhoneNumber(userForm.getPhoneNumber());
+       user.setProfilePic("https://img.icons8.com/nolan/1200/user-default.jpg");
+       
+
+       
         User savedUser= userService.saveUser(user);
         System.out.print("User Saved");
 
