@@ -1,7 +1,6 @@
 package com.scm.peopledesk.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.scm.peopledesk.entities.User;
 import com.scm.peopledesk.forms.UserForm;
 import com.scm.peopledesk.services.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -66,7 +67,7 @@ public class PageController {
 
     //processing signup
     @RequestMapping(value="/do-register", method=RequestMethod.POST)
-    public String processSignup(@ModelAttribute UserForm userForm) {
+    public String processSignup(@ModelAttribute UserForm userForm,HttpSession session){ {
         System.out.println("Processing resgistration");
         //fetch form data
         //UserForm
@@ -103,10 +104,18 @@ public class PageController {
         System.out.print("User Saved");
 
         //message = "Registration Successful"
+
+        //add message 
+
+        session.setAttribute("message", "Registration Successful.");
+
+
         //redirect to login page
 
         return "redirect:/signup";
     }
     
     
+}
+
 }
