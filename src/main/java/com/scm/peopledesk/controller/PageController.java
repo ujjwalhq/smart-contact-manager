@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.scm.peopledesk.entities.User;
 import com.scm.peopledesk.forms.UserForm;
+import com.scm.peopledesk.helpers.Message;
+import com.scm.peopledesk.helpers.MessageType;
 import com.scm.peopledesk.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -107,7 +109,9 @@ public class PageController {
 
         //add message 
 
-        session.setAttribute("message", "Registration Successful.");
+        Message message = Message.builder().content("Registration Successful").type(MessageType.blue).build();
+
+        session.setAttribute("message", message);
 
 
         //redirect to login page

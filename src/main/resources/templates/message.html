@@ -1,7 +1,9 @@
 <div 
 th:if="${session.message != null}"
+data-th-object="${session.message}"
 th:fragment="messagebox"
-class="flex items-center justify-center p-4 mb-4 text-sm text-green-500 rounded-lg"
+th:classappend="' text-' + *{type} + '-500  border border-' + *{type} + '-400 rounded-lg'"
+class="flex items-center justify-center p-4 mb-4 text-sm"
 role="alert">
 
   <svg class="w-4 h-4 me-2 shrink-0"
@@ -18,7 +20,7 @@ role="alert">
   </svg>
 
   <p>
-    <span th:text="${session.message}"></span>
+    <span th:text="*{content}"></span>
   </p>
 
 </div>
