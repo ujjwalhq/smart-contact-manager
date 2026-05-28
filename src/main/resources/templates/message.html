@@ -23,4 +23,6 @@ role="alert">
     <span th:text="*{content}"></span>
   </p>
 
+  <th:block th:text="${@sessionHelper.removeMessage()}"></th:block>
+
 </div>
