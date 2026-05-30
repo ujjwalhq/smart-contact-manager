@@ -3,6 +3,7 @@ package com.scm.peopledesk.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import com.scm.peopledesk.helpers.MessageType;
 import com.scm.peopledesk.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 
 
@@ -69,13 +71,17 @@ public class PageController {
 
     //processing signup
     @RequestMapping(value="/do-register", method=RequestMethod.POST)
-    public String processSignup(@ModelAttribute UserForm userForm,HttpSession session){ {
+    public String processSignup(@Valid @ModelAttribute UserForm userForm,BindingResult rBindingResult, HttpSession session){ {
         System.out.println("Processing resgistration");
         //fetch form data
         //UserForm
         System.out.println(userForm);
 
         //validate form data
+        if(rBindingResult.hasErrors()){
+            System.out.println("Validation Errors: " + rBindingResult.getAllErrors());
+            return "signup";
+        }
         
         //save to database
 
