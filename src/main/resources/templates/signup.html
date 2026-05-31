@@ -29,7 +29,7 @@
           </p>
 
           <!-- form -->
-          <form data-th-action="@{'/do-register'}" method="post" data-th-object="${userForm}" class="mt-5" novalidate>
+          <form data-th-action="@{'/do-register'}" method="post" th:object="${userForm}" class="mt-5" novalidate>
 
             <!-- Name -->
             <div class="mb-3">
@@ -115,10 +115,6 @@
             <div class="flex justify-center space-x-3 mt-4">
               <button type="submit" class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white">
                 Signup
-              </button>
-
-              <button type="reset" class="px-4 py-2 rounded bg-orange-600 hover:bg-orange-700 text-white">
-                Reset
               </button>
             </div>
 

@@ -18,114 +18,116 @@ import com.scm.peopledesk.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
-
-
 @Controller
 public class PageController {
 
     @Autowired
     private UserService userService;
 
-   @GetMapping("/")
+    @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("name","Ujjwal");
-        model.addAttribute("email","ujjwalhq@gmail.com");
+        model.addAttribute("name", "Ujjwal");
+        model.addAttribute("email", "ujjwalhq@gmail.com");
         System.out.println("Home Page");
-        return "home"; 
+        return "home";
     }
 
-    //About Route
+    // About Route
     @GetMapping("/about")
-    public String about(){
+    public String about() {
         return "about";
     }
 
-    //Service Route
-     @GetMapping("/services")
-    public String services(){
+    // Service Route
+    @GetMapping("/services")
+    public String services() {
         return "services";
     }
 
-     //Service Route
-     @GetMapping("/contacts")
-    public String contacts(){
+    // Service Route
+    @GetMapping("/contacts")
+    public String contacts() {
         return "contacts";
     }
 
-     //Service Route
-     @GetMapping("/login")
-    public String login(){
+    // Service Route
+    @GetMapping("/login")
+    public String login() {
         return "login";
     }
 
-     //Service Route
-     @GetMapping("/signup")
-    public String signup(Model model){
+    // Service Route
+    @GetMapping("/signup")
+    public String signup(Model model) {
 
-        UserForm userForm=new UserForm();
+        UserForm userForm = new UserForm();
         // userForm.setName("Ujjwal");
         model.addAttribute("userForm", userForm);
 
         return "signup";
     }
 
-    //processing signup
-    @RequestMapping(value="/do-register", method=RequestMethod.POST)
-    public String processSignup(@Valid @ModelAttribute UserForm userForm,BindingResult rBindingResult, HttpSession session){ {
-        System.out.println("Processing resgistration");
-        //fetch form data
-        //UserForm
-        System.out.println(userForm);
+    // processing signup
+    @RequestMapping(value = "/do-register", method = RequestMethod.POST)
+    public String processSignup(@Valid @ModelAttribute UserForm userForm, BindingResult rBindingResult,
+            HttpSession session) {
+        {
+            System.out.println("Processing resgistration");
+            // fetch form data
+            // UserForm
+            System.out.println(userForm);
 
-        //validate form data
-        if(rBindingResult.hasErrors()){
-            System.out.println("Validation Errors: " + rBindingResult.getAllErrors());
-            return "signup";
+            // validate form data
+            if (rBindingResult.hasErrors()) {
+
+                System.out.println("Has Errors = " + rBindingResult.hasErrors());
+
+                rBindingResult.getFieldErrors()
+                        .forEach(System.out::println);
+
+                return "signup";
+            }
+
+            // save to database
+
+            // userservice
+
+            /*
+             * User user= User.builder()
+             * .name(userForm.getName())
+             * .email(userForm.getEmail())
+             * .password(userForm.getPassword())
+             * .about(userForm.getAbout())
+             * .phoneNumber(userForm.getPhoneNumber())
+             * .profilePic("https://img.icons8.com/nolan/1200/user-default.jpg")
+             * .build();
+             * 
+             */
+
+            User user = new User();
+            user.setName(userForm.getName());
+            user.setEmail(userForm.getEmail());
+            user.setPassword(userForm.getPassword());
+            user.setAbout(userForm.getAbout());
+            user.setPhoneNumber(userForm.getPhoneNumber());
+            user.setProfilePic("https://img.icons8.com/nolan/1200/user-default.jpg");
+
+            User savedUser = userService.saveUser(user);
+            System.out.print("User Saved");
+
+            // message = "Registration Successful"
+
+            // add message
+
+            Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
+
+            session.setAttribute("message", message);
+
+            // redirect to login page
+
+            return "redirect:/signup";
         }
-        
-        //save to database
 
-        //userservice
-        
-     /*  User user= User.builder()
-       .name(userForm.getName())
-       .email(userForm.getEmail())
-       .password(userForm.getPassword())
-       .about(userForm.getAbout())
-       .phoneNumber(userForm.getPhoneNumber())
-       .profilePic("https://img.icons8.com/nolan/1200/user-default.jpg")
-       .build();
-
-       */
-
-       User user = new User();
-       user.setName(userForm.getName());
-       user.setEmail(userForm.getEmail());
-       user.setPassword(userForm.getPassword());
-       user.setAbout(userForm.getAbout());
-       user.setPhoneNumber(userForm.getPhoneNumber());
-       user.setProfilePic("https://img.icons8.com/nolan/1200/user-default.jpg");
-       
-
-       
-        User savedUser= userService.saveUser(user);
-        System.out.print("User Saved");
-
-        //message = "Registration Successful"
-
-        //add message 
-
-        Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
-
-        session.setAttribute("message", message);
-
-
-        //redirect to login page
-
-        return "redirect:/signup";
     }
-    
-    
-}
 
 }
