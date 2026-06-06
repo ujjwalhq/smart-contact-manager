@@ -7,9 +7,11 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.scm.peopledesk.entities.User;
+import com.scm.peopledesk.helpers.AppConstants;
 import com.scm.peopledesk.helpers.ResourceNotFoundException;
 import com.scm.peopledesk.repsitories.UserRepo;
 import com.scm.peopledesk.services.UserService;
@@ -21,6 +23,9 @@ public class UserServiceImpl implements UserService
   @Autowired
   private UserRepo userRepo;
 
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
   private Logger logger=LoggerFactory.getLogger(this.getClass());
 
   @Override
@@ -30,6 +35,14 @@ public class UserServiceImpl implements UserService
     user.setUserId(userId);
     // password encode
     // user.setPassword(userId)
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+    //set the user role
+    
+    user.setRolesList(List.of(AppConstants.ROLE_USER));
+
+
+    logger.info(user.getProvider().toString());
     return userRepo.save(user);
   }
 

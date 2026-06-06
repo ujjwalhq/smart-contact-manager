@@ -57,11 +57,10 @@
    <dependency>
     	<groupId>org.springframework.boot</groupId>
     	<artifactId>spring-boot-starter-security</artifactId>
-    	<version>4.1.0-RC1</version>
     	<scope>compile</scope>
  	</dependency>
 
-		<dependency>
+		<dependency>s
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
