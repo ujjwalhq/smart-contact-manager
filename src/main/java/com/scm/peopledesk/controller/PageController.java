@@ -24,7 +24,7 @@ public class PageController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping({"/", "/home"})
     public String home(Model model) {
         model.addAttribute("name", "Ujjwal");
         model.addAttribute("email", "ujjwalhq@gmail.com");
