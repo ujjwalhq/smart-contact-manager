@@ -44,19 +44,20 @@ public class PageController {
         return "services";
     }
 
-    // Service Route
+    // Contact Route
     @GetMapping("/contacts")
     public String contacts() {
         return "contacts";
     }
 
-    // Service Route
+    // Login Route
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
-    // Service Route
+
+    // Signup Route
     @GetMapping("/signup")
     public String signup(Model model) {
 

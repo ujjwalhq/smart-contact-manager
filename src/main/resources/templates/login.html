@@ -1,3 +1,106 @@
-<div style="background:white;color:black;padding:16px;">
-  PURE CSS TEST
-</div>
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content}, 'Login',~{})}">
+
+<head>
+
+</head>
+
+<body>
+    <div id="content">
+
+        <div class="min-h-screen flex items-center justify-center px-4">
+
+            <div class="w-full max-w-md">
+
+                <!-- Card -->
+                <div class="block p-6 border-t-10 border-blue-700 bg-white rounded-xl shadow
+                    hover:bg-gray-100 dark:bg-gray-800 dark:border-blue-700 dark:hover:bg-gray-700">
+
+                    <!-- Message Box -->
+                    <div th:replace="~{message :: messagebox}"></div>
+
+                    <!-- Login Error -->
+                    <div th:if="${param.error}"
+                        class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-700 dark:text-red-400">
+                        Invalid Email or Password
+                    </div>
+
+                    <!-- Logout Success -->
+                    <div th:if="${param.logout}"
+                        class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-700 dark:text-green-400">
+                        You have been logged out successfully.
+                    </div>
+
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Login Here
+                    </h5>
+
+                    <p class="font-normal text-gray-400 dark:text-gray-400">
+                        Access and manage your contacts on cloud ...
+                    </p>
+
+                    <!-- Login Form -->
+                    <form th:action="@{/authenticate}" method="post" class="mt-5">
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Email
+                            </label>
+
+                            <input type="email"
+                                name="email"
+                                id="email"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5
+                                focus:ring-blue-500 focus:border-blue-500
+                                dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                placeholder="Enter your email"
+                                required>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Password
+                            </label>
+
+                            <input type="password"
+                                name="password"
+                                id="password"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5
+                                focus:ring-blue-500 focus:border-blue-500
+                                dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                placeholder="Enter your password"
+                                required>
+                        </div>
+
+
+                        <!-- Buttons -->
+                        <div class="flex justify-center space-x-3 mt-4">
+                            <button type="submit"
+                                class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white">
+                                Login
+                            </button>
+                        </div>
+
+                        <!-- Signup Link -->
+                        <p class="text-center mt-5 text-sm text-gray-600 dark:text-gray-400">
+                            Don't have an account?
+                            <a th:href="@{/signup}"
+                                class="text-blue-600 hover:underline dark:text-blue-500 font-medium">
+                                Signup
+                            </a>
+                        </p>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
