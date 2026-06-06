@@ -48,15 +48,13 @@ public class SecurityConfig {
     @Autowired
     private SecurityCustomUserDetailService userDetailsService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
 
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailsService);
 
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 
         return daoAuthenticationProvider;
     }
