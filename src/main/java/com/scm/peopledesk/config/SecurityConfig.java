@@ -121,7 +121,8 @@ public class SecurityConfig {
         httpSecurity.oauth2Login(oauth2Login->{
             oauth2Login.loginPage("/login");
             oauth2Login.successHandler(handler);
-            oauth2Login.defaultSuccessUrl("/user/dashboard");
+            // oauth2Login.defaultSuccessUrl("/user/dashboard");
+            
         });
 
 
