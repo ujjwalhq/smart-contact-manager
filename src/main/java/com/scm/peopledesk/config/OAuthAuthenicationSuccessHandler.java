@@ -72,10 +72,11 @@ public class OAuthAuthenicationSuccessHandler implements AuthenticationSuccessHa
       // github
       // github attributes
 
-      String email = (String) oauthUser.getAttribute("email")!=null ? (String) oauthUser.getAttribute("email") : "email_not_provided_by_github";
-      String picture = (String) oauthUser.getAttribute("avatar_url")!=null ? (String) oauthUser.getAttribute("avatar_url") : "picture_not_provided_by_github";
+      String email = (String) oauthUser.getAttribute("email") != null ? (String) oauthUser.getAttribute("email") : (String) oauthUser.getAttribute("login") + "@github.local";
+      String picture = (String) oauthUser.getAttribute("avatar_url") != null ? (String) oauthUser.getAttribute("avatar_url")          : "https://img.icons8.com/nolan/1200/user-default.jpg";
       String name = (String) oauthUser.getAttribute("name")!=null ? (String) oauthUser.getAttribute("name") : "name_not_provided_by_github";  
       String providerUserId = oauthUser.getName() != null ? oauthUser.getName() : "provider_user_id_not_provided_by_github";
+
 
       user.setEmail(email);
       user.setProfilePic(picture);
