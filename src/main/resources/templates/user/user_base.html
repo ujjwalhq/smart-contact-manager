@@ -8,20 +8,26 @@
 
     <link rel="stylesheet" data-th-href="@{/css/output.css}">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
 
 <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
 
     <!-- User Navbar -->
-    <div th:replace="~{user/user_navbar :: user-navbar}"></div>
+    <div th:replace="~{user/user_navbar :: user_navbar}"></div>
+
+    <div th:replace="~{user/sidebar :: sidebar}"></div>
+
+
 
     <!-- Page Content -->
-    <div th:replace="${content}"></div>
+    <div class="p-4 sm:ml-64">
+        <div th:replace="${content}"></div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
     <script data-th-src="@{/js/script.js}"></script>
 
 </body>
+
 </html>
