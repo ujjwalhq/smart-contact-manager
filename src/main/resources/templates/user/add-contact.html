@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{user/user_base :: parent(~{::#content},'Add Contact')}">
+
+<div id="content">
+
+  <div class="w-full max-w-3xl mx-auto px-4 py-6">
+
+    <!-- Card -->
+    <div class="block p-6 bg-white border-t-4 border-blue-700 rounded-xl shadow-lg
+                    dark:bg-gray-800 dark:hover:bg-gray-700">
+
+      <!-- Heading -->
+      <h5 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Add New Contact
+      </h5>
+
+      <p class="font-normal text-gray-400 dark:text-gray-400 mb-6">
+        Create and organize contact information for personal or professional networking.
+      </p>
+
+      <!-- Form -->
+      <form method="post" class="space-y-5">
+
+        <!-- Contact Name -->
+        <div>
+
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Full Name
+          </label>
+
+          <div class="relative">
+
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+              <i class="fa-solid fa-user text-gray-400"></i>
+            </span>
+
+            <input type="text" name="name" placeholder="John Anderson" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900
+            focus:ring-blue-500 focus:border-blue-500
+            dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+
+          </div>
+
+        </div>
+
+        <!-- Contact Email -->
+        <div>
+
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Email Address
+          </label>
+
+          <div class="relative">
+
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+              <i class="fa-solid fa-envelope text-gray-400"></i>
+            </span>
+
+            <input type="email" name="email" placeholder="john.anderson@company.com" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900
+            focus:ring-blue-500 focus:border-blue-500
+            dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+
+          </div>
+
+        </div>
+
+        <!-- Contact Phone -->
+        <div>
+
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Phone Number
+          </label>
+
+          <div class="relative">
+
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+              <i class="fa-solid fa-phone text-gray-400"></i>
+            </span>
+
+            <input type="text" name="phone" placeholder="+91 98765 43210" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900
+            focus:ring-blue-500 focus:border-blue-500
+            dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+
+          </div>
+
+        </div>
+
+        <!-- Contact Address -->
+        <div>
+
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Address
+          </label>
+
+          <textarea rows="4" name="address" placeholder="221B Baker Street, London, United Kingdom" class="block w-full p-2.5 text-sm bg-gray-50 border border-gray-300 rounded-lg
+                        focus:ring-blue-500 focus:border-blue-500
+                        dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+
+        </div>
+
+        <!-- Description -->
+        <div>
+
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Description
+          </label>
+
+          <textarea rows="4" name="description" placeholder="Write something about this contact" class="block w-full p-2.5 text-sm bg-gray-50 border border-gray-300 rounded-lg
+                        focus:ring-blue-500 focus:border-blue-500
+                        dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+
+        </div>
+
+        <!-- Website & LinkedIn -->
+        <div class="grid md:grid-cols-2 gap-4">
+
+          <!-- Website -->
+          <div>
+
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Website Link
+            </label>
+
+            <div class="relative">
+
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <i class="fa-solid fa-globe text-gray-400"></i>
+              </span>
+
+              <input type="url" name="websiteLink" placeholder="https://example.com" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900
+                focus:ring-blue-500 focus:border-blue-500
+                dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+
+            </div>
+
+          </div>
+
+          <!-- LinkedIn -->
+          <div>
+
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              LinkedIn Link
+            </label>
+
+            <div class="relative">
+
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <i class="fa-brands fa-linkedin text-blue-500"></i>
+              </span>
+
+              <input type="url" name="linkedInLink" placeholder="https://linkedin.com/in/username" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900
+                focus:ring-blue-500 focus:border-blue-500
+                dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Contact Image -->
+        <div>
+
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Profile Picture
+          </label>
+
+          <input type="file" name="contactImage" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50
+                        dark:text-gray-400 dark:border-gray-600 dark:bg-gray-700">
+
+        </div>
+
+        <!-- Favorite Contact -->
+      <div class="flex items-center justify-center gap-2">
+
+          <input type="checkbox" id="favorite" name="favorite" class="w-4 h-4 text-blue-600 border-gray-300 rounded">
+
+          <label for="favorite" class="text-sm font-medium text-gray-900 dark:text-white">
+
+            Is this contact your favorite one?
+
+          </label>
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-center space-x-3 mt-4">
+
+          <button type="submit" class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white">
+
+            Add Contact
+
+          </button>
+
+          <button type="reset" class="px-4 py-2 rounded bg-gray-600 hover:bg-gray-700 text-white">
+
+            Reset
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+</html>
