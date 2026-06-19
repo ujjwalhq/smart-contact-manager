@@ -9,6 +9,8 @@
     <div class="block p-6 bg-white border-t-4 border-blue-700 rounded-xl shadow-lg
                     dark:bg-gray-800 dark:hover:bg-gray-700">
 
+    <div th:replace="~{message :: messagebox}"></div>
+
       <!-- Heading -->
       <h5 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
         Add New Contact
@@ -19,10 +21,7 @@
       </p>
 
       <!-- Form -->
-      <form method="post" class="space-y-5" 
-      data-th-action="@{'/user/contacts/add'}"
-      data-th-object="${contactForm}"
-      >
+      <form method="post" class="space-y-5" data-th-action="@{'/user/contacts/add'}" data-th-object="${contactForm}">
 
         <!-- Contact Name -->
         <div>
@@ -39,11 +38,14 @@
 
             <input type="text" name="name" placeholder="John Anderson" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900
             focus:ring-blue-500 focus:border-blue-500
-            dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-            data-th-field="*{name}"
-            >
-
+            dark:bg-gray-700 dark:border-gray-600 dark:text-white" data-th-field="*{name}">
           </div>
+
+          <p th:if="${#fields.hasErrors('name')}" class="mt-1 flex items-center gap-1 text-xs text-red-500">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span th:errors="*{name}"></span>
+          </p>
+
 
         </div>
 
@@ -62,11 +64,15 @@
 
             <input type="email" name="email" placeholder="john.anderson@company.com" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900
             focus:ring-blue-500 focus:border-blue-500
-            dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-            data-th-field="*{email}"
-            >
+            dark:bg-gray-700 dark:border-gray-600 dark:text-white" data-th-field="*{email}">
 
           </div>
+
+          <p th:if="${#fields.hasErrors('email')}" class="mt-1 flex items-center gap-1 text-xs text-red-500">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span th:errors="*{email}"></span>
+          </p>
+
 
         </div>
 
@@ -85,11 +91,14 @@
 
             <input type="text" name="phone" placeholder="+91 98765 43210" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900
             focus:ring-blue-500 focus:border-blue-500
-            dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-            data-th-field="*{phoneNumber}"
-            >
+            dark:bg-gray-700 dark:border-gray-600 dark:text-white" data-th-field="*{phoneNumber}">
 
           </div>
+          <p th:if="${#fields.hasErrors('phoneNumber')}" class="mt-1 flex items-center gap-1 text-xs text-red-500">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span th:errors="*{phoneNumber}"></span>
+          </p>
+
 
         </div>
 
@@ -102,11 +111,15 @@
 
           <textarea rows="4" name="address" placeholder="221B Baker Street, London, United Kingdom" class="block w-full p-2.5 text-sm bg-gray-50 border border-gray-300 rounded-lg
                         focus:ring-blue-500 focus:border-blue-500
-                        dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                        data-th-field="*{address}"
-                        ></textarea>
+                        dark:bg-gray-700 dark:border-gray-600 dark:text-white" data-th-field="*{address}"></textarea>
 
         </div>
+
+        <p th:if="${#fields.hasErrors('address')}" class="mt-1 flex items-center gap-1 text-xs text-red-500">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span th:errors="*{address}"></span>
+        </p>
+
 
         <!-- Description -->
         <div>
@@ -118,8 +131,7 @@
           <textarea rows="4" name="description" placeholder="Write something about this contact" class="block w-full p-2.5 text-sm bg-gray-50 border border-gray-300 rounded-lg
                         focus:ring-blue-500 focus:border-blue-500
                         dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                        data-th-field="*{description}"
-                        ></textarea>
+            data-th-field="*{description}"></textarea>
 
         </div>
 
@@ -141,9 +153,7 @@
 
               <input type="url" name="websiteLink" placeholder="https://example.com" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900
                 focus:ring-blue-500 focus:border-blue-500
-                dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                data-th-field="*{websiteLink}"
-                >
+                dark:bg-gray-700 dark:border-gray-600 dark:text-white" data-th-field="*{websiteLink}">
 
             </div>
 
@@ -164,9 +174,7 @@
 
               <input type="url" name="linkedInLink" placeholder="https://linkedin.com/in/username" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900
                 focus:ring-blue-500 focus:border-blue-500
-                dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                data-th-field="*{linkedInLink}"
-                >
+                dark:bg-gray-700 dark:border-gray-600 dark:text-white" data-th-field="*{linkedInLink}">
 
             </div>
 
@@ -187,11 +195,10 @@
         </div>
 
         <!-- Favorite Contact -->
-      <div class="flex items-center justify-center gap-2">
+        <div class="flex items-center justify-center gap-2">
 
           <input type="checkbox" name="favorite" class="w-4 h-4 text-blue-600 border-gray-300 rounded"
-          data-th-field="*{favorite}"
-          >
+            data-th-field="*{favorite}">
 
           <label for="favorite" class="text-sm font-medium text-gray-900 dark:text-white">
 
