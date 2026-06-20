@@ -9,7 +9,7 @@
     <div class="block p-6 bg-white border-t-4 border-blue-700 rounded-xl shadow-lg
                     dark:bg-gray-800 dark:hover:bg-gray-700">
 
-    <div th:replace="~{message :: messagebox}"></div>
+      <div th:replace="~{message :: messagebox}"></div>
 
       <!-- Heading -->
       <h5 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -21,7 +21,8 @@
       </p>
 
       <!-- Form -->
-      <form method="post" class="space-y-5" data-th-action="@{'/user/contacts/add'}" data-th-object="${contactForm}" enctype="multipart/form-data">
+      <form method="post" class="space-y-5" data-th-action="@{'/user/contacts/add'}" data-th-object="${contactForm}"
+        enctype="multipart/form-data">
 
         <!-- Contact Name -->
         <div>
@@ -189,10 +190,13 @@
             Profile Picture
           </label>
 
-          <input type="file" name="contactImage" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50
-                        dark:text-gray-400 dark:border-gray-600 dark:bg-gray-700"
-                        
-            data-th-field="*{profileImage}">
+          <div class="mt-4 flex justify-center">
+            <img id="upload_image_preview" alt="Profile Preview" class="hidden w-28 h-28 rounded-full border-4 border-blue-600
+               object-cover shadow-lg">
+          </div>
+          
+          <input type="file" id="image_file_input" name="contactImage" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50
+                        dark:text-gray-400 dark:border-gray-600 dark:bg-gray-700" data-th-field="*{profileImage}">
 
         </div>
 
@@ -234,5 +238,6 @@
   </div>
 
 </div>
+<script src="@{'/js/admin.js'}"></script>
 
 </html>
