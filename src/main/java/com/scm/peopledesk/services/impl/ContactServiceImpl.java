@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.scm.peopledesk.entities.Contact;
+import com.scm.peopledesk.entities.User;
 import com.scm.peopledesk.helpers.ResourceNotFoundException;
 import com.scm.peopledesk.repsitories.ContactRepo;
 import com.scm.peopledesk.services.ContactService;
@@ -66,6 +67,13 @@ public class ContactServiceImpl implements ContactService {
 	public List<Contact> getByUserId(String userId) {
 
 		return contactRepo.findByUserId(userId);
+	}
+
+	@Override
+	public List<Contact> getByUser(User user) {
+
+		return contactRepo.findByUser(user);
+
 	}
 
 }

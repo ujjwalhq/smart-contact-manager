@@ -2,6 +2,7 @@ package com.scm.peopledesk.controller;
 
 import com.scm.peopledesk.entities.User;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -109,5 +110,23 @@ public class ContactController {
             .type(MessageType.green)
             .build());
     return "redirect:/user/contacts/add";
+  }
+
+
+  //view contacts
+  @RequestMapping
+  public String viewContacts(Model model, Authentication authentication){
+
+    //load all the contacts
+    String username = Helper.getEmailOfLoggedInUser(authentication);
+
+    User user = userService.getUserByEmail(username);
+
+    
+    List<Contact> contacts = contactService.getByUser(user);
+
+    model.addAttribute("contacts", contacts);
+
+    return "user/contacts";
   }
 }
