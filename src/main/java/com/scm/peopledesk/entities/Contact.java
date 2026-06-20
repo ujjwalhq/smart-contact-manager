@@ -36,17 +36,13 @@ public class Contact {
 
     private String linkedInLink;
 
+    private String cloudinaryImagePublicId;
+
     @ManyToOne
     private User user;
 
-    @OneToMany(
-        mappedBy = "contact",
-        cascade = CascadeType.ALL,
-        fetch = FetchType.EAGER,
-        orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<SocialLink> links = new ArrayList<>();
-
 
     // Getters & Setters
 
@@ -144,5 +140,13 @@ public class Contact {
 
     public void setLinks(List<SocialLink> links) {
         this.links = links;
+    }
+
+    public String getCloudinaryImagePublicId() {
+        return cloudinaryImagePublicId;
+    }
+
+    public void setCloudinaryImagePublicId(String cloudinaryImagePublicId) {
+        this.cloudinaryImagePublicId = cloudinaryImagePublicId;
     }
 }

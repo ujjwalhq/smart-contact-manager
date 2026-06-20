@@ -1,6 +1,10 @@
 package com.scm.peopledesk.controller;
 
 import com.scm.peopledesk.entities.User;
+
+import java.util.UUID;
+
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,6 +20,7 @@ import com.scm.peopledesk.helpers.Helper;
 import com.scm.peopledesk.helpers.Message;
 import com.scm.peopledesk.helpers.MessageType;
 import com.scm.peopledesk.services.ContactService;
+import com.scm.peopledesk.services.ImageService;
 import com.scm.peopledesk.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -25,8 +30,13 @@ import jakarta.validation.Valid;
 @RequestMapping("/user/contacts")
 public class ContactController {
 
+  private Logger logger = org.slf4j.LoggerFactory.getLogger(ContactController.class);
+  
   @Autowired
   private ContactService contactService;
+
+  @Autowired
+  private ImageService imageService;
 
   @Autowired
   private UserService userService;
@@ -64,6 +74,14 @@ public class ContactController {
     User user = userService.getUserByEmail(username);
 
     // process the contact picture
+    
+    logger.info("file information : {}", contactForm.getProfileImage().getOriginalFilename());
+
+    //upload image code
+    
+    String filename = UUID.randomUUID().toString();
+
+    String fileURL = imageService.uploadImage(contactForm.getProfileImage(),filename);
 
     Contact contact = new Contact();
     contact.setName(contactForm.getName());
@@ -75,6 +93,8 @@ public class ContactController {
     contact.setUser(user);
     contact.setLinkedInLink(contactForm.getLinkedInLink());
     contact.setWebsiteLink(contactForm.getWebsiteLink());
+    contact.setPicture(fileURL);
+    contact.setCloudinaryImagePublicId(filename);
 
     contactService.save(contact);
 

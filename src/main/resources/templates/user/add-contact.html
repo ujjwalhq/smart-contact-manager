@@ -21,7 +21,7 @@
       </p>
 
       <!-- Form -->
-      <form method="post" class="space-y-5" data-th-action="@{'/user/contacts/add'}" data-th-object="${contactForm}">
+      <form method="post" class="space-y-5" data-th-action="@{'/user/contacts/add'}" data-th-object="${contactForm}" enctype="multipart/form-data">
 
         <!-- Contact Name -->
         <div>
@@ -190,7 +190,9 @@
           </label>
 
           <input type="file" name="contactImage" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50
-                        dark:text-gray-400 dark:border-gray-600 dark:bg-gray-700">
+                        dark:text-gray-400 dark:border-gray-600 dark:bg-gray-700"
+                        
+            data-th-field="*{profileImage}">
 
         </div>
 
