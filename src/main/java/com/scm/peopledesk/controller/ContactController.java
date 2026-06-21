@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -121,7 +122,7 @@ public class ContactController {
           + "&rounded=true";
 
       contact.setPicture(avatarUrl);
-      
+
     }
 
     contactService.save(contact);
@@ -154,4 +155,27 @@ public class ContactController {
 
     return "user/contacts";
   }
+
+  // delete contact
+  @RequestMapping("/delete/{contactId}")
+  public String deleteContact(@PathVariable("contactId") String contactId, HttpSession session) {
+
+    // Fetch contact details before deletion so we can show the contact name in the success message.
+    Contact contact = contactService.getById(contactId);
+    String contactName = contact.getName();
+
+    // Delete the selected contact from the database.
+    contactService.delete(contactId);
+    logger.info("Contact {} deteled ", contactId);
+
+
+    session.setAttribute("message",
+        Message.builder()
+            .content(contactName + " has been removed from your contacts")
+            .type(MessageType.green)
+            .build());
+
+    return "redirect:/user/contacts";
+  }
+
 }

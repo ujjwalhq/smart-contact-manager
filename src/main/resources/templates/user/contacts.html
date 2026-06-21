@@ -28,6 +28,9 @@
 
     </div>
 
+    <!-- show message -->
+    <div data-th-replace="~{message :: messagebox}"></div>
+
     <!-- Search -->
     <div class="mb-6">
 
@@ -85,7 +88,12 @@
                     <div class="font-semibold text-gray-900 dark:text-white" th:text="${contact.name}">
                     </div>
 
-                    <div class="text-xs text-gray-500" th:text="${contact.address}">
+                    <div class="flex items-center text-xs text-gray-500 mt-1">
+
+                      <i class="fa-solid fa-location-dot text-gray-400 mr-1.9"></i>
+
+                      <span th:text="${contact.address}"></span>
+
                     </div>
 
                   </div>
@@ -94,10 +102,18 @@
 
               </td>
 
-              <td class="px-6 py-4" th:text="${contact.email}">
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                  <i class="fa-solid fa-envelope text-[#1447E6]"></i>
+                  <span th:text="${contact.email}"></span>
+                </div>
               </td>
 
-              <td class="px-6 py-4" th:text="${contact.phoneNumber}">
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                  <i class="fa-solid fa-phone text-[#1447E6]"></i>
+                  <span th:text="${contact.phoneNumber}"></span>
+                </div>
               </td>
 
               <!-- Social Links -->
@@ -105,7 +121,7 @@
                 <div class="flex gap-4">
 
                   <!-- Email -->
-                  <a th:href="'mailto:' + ${contact.email}" class="text-red-500 hover:text-red-600" title="Send Email">
+                  <a th:href="'mailto:' + ${contact.email}" style="color:#38BDF8" title="Send Email">
 
                     <i class="fa-solid fa-envelope text-lg"></i>
 
@@ -127,7 +143,7 @@
                     <i class="fa-brands fa-linkedin text-lg"></i>
 
                   </a>
-                  
+
                   <!-- Website -->
                   <a th:if="${contact.websiteLink != null && !#strings.isEmpty(contact.websiteLink)}"
                     th:href="${contact.websiteLink}" target="_blank" class="text-gray-500 hover:text-blue-600"
@@ -145,24 +161,33 @@
               <!-- Actions -->
               <td class="px-6 py-4">
 
-                <div class="flex justify-center gap-2">
+                <div class="flex justify-center items-center gap-4">
 
-                  <button class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                    <i class="fa-solid fa-eye"></i>
+                  <!-- View -->
+                  <button class="text-[#1447E6] hover:text-blue-400 hover:scale-110 transition-all duration-200">
+
+                    <i class="fa-solid fa-eye text-lg"></i>
+
                   </button>
 
-                  <button class="px-3 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
-                    <i class="fa-solid fa-pen"></i>
+                  <!-- Edit -->
+                  <button class="text-[#1447E6] hover:text-blue-400 hover:scale-110 transition-all duration-200">
+
+                    <i class="fa-solid fa-pen text-lg"></i>
+
                   </button>
 
-                  <button class="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-                    <i class="fa-solid fa-trash"></i>
+                  <!-- Delete -->
+                  <button th:onclick="deleteContact([[${contact.id}]])"
+                    class="text-red-500 hover:text-red-400 hover:scale-110 transition-all duration-200">
+
+                    <i class="fa-solid fa-trash text-lg"></i>
+
                   </button>
 
                 </div>
 
               </td>
-
             </tr>
 
           </tbody>
@@ -189,9 +214,13 @@
               John Doe
             </h3>
 
-            <p class="text-sm text-gray-500" th:text="${contact.address}">
-              Address
-            </p>
+            <div class="flex items-center gap-1 text-sm text-gray-500">
+
+              <i class="fa-solid fa-location-dot text-xs text-gray-400"></i>
+
+              <span th:text="${contact.address}"></span>
+
+            </div>
 
           </div>
 
@@ -220,7 +249,7 @@
           <div class="flex gap-4">
 
             <!-- Email -->
-            <a th:href="'mailto:' + ${contact.email}" class="text-red-500 hover:text-red-600" title="Send Email">
+            <a th:href="'mailto:' + ${contact.email}" style="color:#38BDF8" title="Send Email">
 
               <i class="fa-solid fa-envelope text-lg"></i>
 
@@ -256,18 +285,28 @@
           </div>
 
           <!-- Actions -->
-          <div class="flex gap-2">
+          <div class="flex items-center gap-4">
 
-            <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-blue-600 text-white">
-              <i class="fa-solid fa-eye text-xs"></i>
+            <!-- View -->
+            <button class="text-[#1447E6] hover:text-blue-400 hover:scale-110 transition-all duration-200">
+
+              <i class="fa-solid fa-eye"></i>
+
             </button>
 
-            <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-yellow-500 text-white">
-              <i class="fa-solid fa-pen text-xs"></i>
+            <!-- Edit -->
+            <button class="text-[#1447E6] hover:text-blue-400 hover:scale-110 transition-all duration-200">
+
+              <i class="fa-solid fa-pen"></i>
+
             </button>
 
-            <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-600 text-white">
-              <i class="fa-solid fa-trash text-xs"></i>
+            <!-- Delete -->
+            <button th:onclick="deleteContact([[${contact.id}]])"
+              class="text-red-500 hover:text-red-400 hover:scale-110 transition-all duration-200">
+
+              <i class="fa-solid fa-trash"></i>
+
             </button>
 
           </div>
