@@ -32,7 +32,7 @@ import jakarta.validation.Valid;
 public class ContactController {
 
   private Logger logger = org.slf4j.LoggerFactory.getLogger(ContactController.class);
-  
+
   @Autowired
   private ContactService contactService;
 
@@ -75,14 +75,24 @@ public class ContactController {
     User user = userService.getUserByEmail(username);
 
     // process the contact picture
-    
-    logger.info("file information : {}", contactForm.getProfileImage().getOriginalFilename());
 
-    //upload image code
-    
-    String filename = UUID.randomUUID().toString();
+    String fileURL = null;
+    String filename = null;
 
-    String fileURL = imageService.uploadImage(contactForm.getProfileImage(),filename);
+    if (contactForm.getProfileImage() != null &&
+        !contactForm.getProfileImage().isEmpty()) {
+
+      logger.info("file information : {}",
+          contactForm.getProfileImage().getOriginalFilename());
+
+      // upload image
+
+      filename = UUID.randomUUID().toString();
+
+      fileURL = imageService.uploadImage(
+          contactForm.getProfileImage(),
+          filename);
+    }
 
     Contact contact = new Contact();
     contact.setName(contactForm.getName());
@@ -94,8 +104,25 @@ public class ContactController {
     contact.setUser(user);
     contact.setLinkedInLink(contactForm.getLinkedInLink());
     contact.setWebsiteLink(contactForm.getWebsiteLink());
-    contact.setPicture(fileURL);
-    contact.setCloudinaryImagePublicId(filename);
+
+    // Save uploaded image details if profile image is provided,
+    // otherwise assign a default contact image.
+    if (fileURL != null) {
+
+      contact.setPicture(fileURL);
+      contact.setCloudinaryImagePublicId(filename);
+
+    } else {
+
+      String avatarUrl = "https://ui-avatars.com/api/?name="
+          + contactForm.getName().replace(" ", "+")
+          + "&background=1E40AF"
+          + "&color=fff"
+          + "&rounded=true";
+
+      contact.setPicture(avatarUrl);
+      
+    }
 
     contactService.save(contact);
 
@@ -112,17 +139,15 @@ public class ContactController {
     return "redirect:/user/contacts/add";
   }
 
-
-  //view contacts
+  // view contacts
   @RequestMapping
-  public String viewContacts(Model model, Authentication authentication){
+  public String viewContacts(Model model, Authentication authentication) {
 
-    //load all the contacts
+    // load all the contacts
     String username = Helper.getEmailOfLoggedInUser(authentication);
 
     User user = userService.getUserByEmail(username);
 
-    
     List<Contact> contacts = contactService.getByUser(user);
 
     model.addAttribute("contacts", contacts);
