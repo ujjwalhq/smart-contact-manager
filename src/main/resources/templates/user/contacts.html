@@ -102,22 +102,41 @@
 
               <!-- Social Links -->
               <td class="px-6 py-4">
-
                 <div class="flex gap-4">
 
+                  <!-- Email -->
+                  <a th:href="'mailto:' + ${contact.email}" class="text-red-500 hover:text-red-600" title="Send Email">
+
+                    <i class="fa-solid fa-envelope text-lg"></i>
+
+                  </a>
+
+                  <!-- WhatsApp -->
+                  <a th:href="'https://wa.me/91' + ${contact.phoneNumber}" target="_blank"
+                    class="text-green-500 hover:text-green-600" title="Chat on WhatsApp">
+
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+
+                  </a>
+
+                  <!-- LinkedIn -->
+                  <a th:if="${contact.linkedInLink != null && !#strings.isEmpty(contact.linkedInLink)}"
+                    th:href="${contact.linkedInLink}" target="_blank" class="text-blue-600 hover:text-blue-700"
+                    title="LinkedIn Profile">
+
+                    <i class="fa-brands fa-linkedin text-lg"></i>
+
+                  </a>
+                  
+                  <!-- Website -->
                   <a th:if="${contact.websiteLink != null && !#strings.isEmpty(contact.websiteLink)}"
-                    th:href="${contact.websiteLink}" target="_blank" class="text-gray-500 hover:text-blue-600">
+                    th:href="${contact.websiteLink}" target="_blank" class="text-gray-500 hover:text-blue-600"
+                    title="Visit Website">
 
                     <i class="fa-solid fa-globe text-lg"></i>
 
                   </a>
 
-                  <a th:if="${contact.linkedInLink != null && !#strings.isEmpty(contact.linkedInLink)}"
-                    th:href="${contact.linkedInLink}" target="_blank" class="text-blue-600">
-
-                    <i class="fa-brands fa-linkedin text-lg"></i>
-
-                  </a>
 
                 </div>
 
@@ -197,47 +216,63 @@
         <!-- Social Links -->
         <div class="mt-4 flex items-center justify-between">
 
-    <!-- Social Links -->
-    <div class="flex gap-3">
+          <!-- Social Links -->
+          <div class="flex gap-4">
 
-        <a th:if="${contact.websiteLink != null && !#strings.isEmpty(contact.websiteLink)}"
-           th:href="${contact.websiteLink}"
-           target="_blank"
-           class="text-gray-500 hover:text-blue-600">
+            <!-- Email -->
+            <a th:href="'mailto:' + ${contact.email}" class="text-red-500 hover:text-red-600" title="Send Email">
 
-            <i class="fa-solid fa-globe text-lg"></i>
+              <i class="fa-solid fa-envelope text-lg"></i>
 
-        </a>
+            </a>
 
-        <a th:if="${contact.linkedInLink != null && !#strings.isEmpty(contact.linkedInLink)}"
-           th:href="${contact.linkedInLink}"
-           target="_blank"
-           class="text-blue-600">
+            <!-- WhatsApp -->
+            <a th:href="'https://wa.me/91' + ${contact.phoneNumber}" target="_blank"
+              class="text-green-500 hover:text-green-600" title="Chat on WhatsApp">
 
-            <i class="fa-brands fa-linkedin text-lg"></i>
+              <i class="fa-brands fa-whatsapp text-lg"></i>
 
-        </a>
+            </a>
 
-    </div>
+            <!-- LinkedIn -->
+            <a th:if="${contact.linkedInLink != null && !#strings.isEmpty(contact.linkedInLink)}"
+              th:href="${contact.linkedInLink}" target="_blank" class="text-blue-600 hover:text-blue-700"
+              title="LinkedIn Profile">
 
-    <!-- Actions -->
-    <div class="flex gap-2">
+              <i class="fa-brands fa-linkedin text-lg"></i>
 
-        <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-blue-600 text-white">
-            <i class="fa-solid fa-eye text-xs"></i>
-        </button>
+            </a>
 
-        <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-yellow-500 text-white">
-            <i class="fa-solid fa-pen text-xs"></i>
-        </button>
+            <!-- Website -->
+            <a th:if="${contact.websiteLink != null && !#strings.isEmpty(contact.websiteLink)}"
+              th:href="${contact.websiteLink}" target="_blank" class="text-gray-500 hover:text-blue-600"
+              title="Visit Website">
 
-        <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-600 text-white">
-            <i class="fa-solid fa-trash text-xs"></i>
-        </button>
+              <i class="fa-solid fa-globe text-lg"></i>
 
-    </div>
+            </a>
 
-</div>
+
+          </div>
+
+          <!-- Actions -->
+          <div class="flex gap-2">
+
+            <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-blue-600 text-white">
+              <i class="fa-solid fa-eye text-xs"></i>
+            </button>
+
+            <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-yellow-500 text-white">
+              <i class="fa-solid fa-pen text-xs"></i>
+            </button>
+
+            <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-600 text-white">
+              <i class="fa-solid fa-trash text-xs"></i>
+            </button>
+
+          </div>
+
+        </div>
 
       </div>
 
