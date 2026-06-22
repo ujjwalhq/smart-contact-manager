@@ -73,7 +73,7 @@
 
           <tbody>
 
-            <tr th:each="contact : ${contacts}"
+            <tr th:each="contact : ${pageContact.content}"
               class="bg-white border-b dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
 
               <!-- Contact -->
@@ -193,6 +193,40 @@
           </tbody>
 
         </table>
+        <!-- pagination component -->
+        <div class="flex justify-center mt-6" th:if="${pageContact.totalPages > 1}">
+
+          <nav>
+            <ul class="inline-flex items-center gap-1">
+
+              <!-- Previous -->
+              <li th:if="${!pageContact.first}">
+                <a th:href="@{'/user/contacts?page=' + ${pageContact.number - 1}}"
+                  class="w-9 h-9 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-[#1447E6]">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </a>
+              </li>
+
+              <!-- Pages -->
+              <li th:each="i : ${#numbers.sequence(0, pageContact.totalPages - 1)}">
+                <a th:href="@{'/user/contacts?page=' + ${i}}" th:text="${i + 1}"
+                  th:classappend="${i == pageContact.number} ? ' bg-[#1447E6] text-white' : ' bg-gray-800 text-gray-300'"
+                  class="w-9 h-9 flex items-center justify-center rounded-lg">
+                </a>
+              </li>
+
+              <!-- Next -->
+              <li th:if="${!pageContact.last}">
+                <a th:href="@{'/user/contacts?page=' + ${pageContact.number + 1}}"
+                  class="w-9 h-9 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-[#1447E6]">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+        </div>
 
       </div>
 
@@ -201,7 +235,7 @@
     <!-- MOBILE VIEW -->
     <div class="grid gap-4 md:hidden">
 
-      <div th:each="contact : ${contacts}"
+      <div th:each="contact : ${pageContact.content}"
         class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow">
 
         <div class="flex items-center gap-3">
@@ -312,6 +346,52 @@
           </div>
 
         </div>
+
+      </div>
+      <!-- pagination component -->
+      <div class="flex justify-center mt-6 mb-2" th:if="${pageContact.totalPages > 1}">
+
+        <nav>
+
+          <ul class="inline-flex items-center gap-1">
+
+            <!-- Previous -->
+            <li th:if="${!pageContact.first}">
+              <a th:href="@{'/user/contacts?page=' + ${pageContact.number - 1}}" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
+                          rounded-lg bg-gray-800 text-gray-300
+                          hover:bg-[#1447E6] hover:text-white transition">
+
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+
+              </a>
+            </li>
+
+            <!-- Page Numbers -->
+            <li th:each="i : ${#numbers.sequence(0, pageContact.totalPages - 1)}">
+
+              <a th:href="@{'/user/contacts?page=' + ${i}}" th:text="${i + 1}" th:classappend="${i == pageContact.number}
+                   ? ' bg-[#1447E6] text-white'
+                   : ' bg-gray-800 text-gray-300 hover:bg-gray-700'" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
+                          rounded-lg text-sm transition">
+
+              </a>
+
+            </li>
+
+            <!-- Next -->
+            <li th:if="${!pageContact.last}">
+              <a th:href="@{'/user/contacts?page=' + ${pageContact.number + 1}}" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
+                          rounded-lg bg-gray-800 text-gray-300
+                          hover:bg-[#1447E6] hover:text-white transition">
+
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+
+              </a>
+            </li>
+
+          </ul>
+
+        </nav>
 
       </div>
 

@@ -2,6 +2,8 @@ package com.scm.peopledesk.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.scm.peopledesk.entities.Contact;
 import com.scm.peopledesk.entities.User;
 
@@ -29,5 +31,7 @@ public interface ContactService {
   List<Contact> getByUserId(String userId);
 
   List<Contact> getByUser(User user);
+
+  Page<Contact> getByUser(User user, int page, int size, String sortField, String sortDirection);
 
 }
