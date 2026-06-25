@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -145,22 +146,23 @@ public class ContactController {
   // view contacts
   @RequestMapping
   public String viewContacts(
-    @RequestParam(value = "page", defaultValue = "0") int page,
-    @RequestParam(value = "size",defaultValue = "10") int size,
-    @RequestParam(value = "sortBy",defaultValue = "name") String sortBy,
-    @RequestParam(value = "direction",defaultValue = "asc") String direction,
-    Model model, 
-    Authentication authentication) {
+      @RequestParam(value = "page", defaultValue = "0") int page,
+      @RequestParam(value = "size", defaultValue = "10") int size,
+      @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+      @RequestParam(value = "direction", defaultValue = "asc") String direction,
+      Model model,
+      Authentication authentication) {
 
     // load all the contacts
     String username = Helper.getEmailOfLoggedInUser(authentication);
 
     User user = userService.getUserByEmail(username);
 
-    Page<Contact> pageContact = contactService.getByUser(user,page,size,sortBy,direction);
+    Page<Contact> pageContact = contactService.getByUser(user, page, size, sortBy, direction);
 
     model.addAttribute("pageContact", pageContact);
 
+    model.addAttribute("isSearch", false);
     return "user/contacts";
   }
 
@@ -168,14 +170,14 @@ public class ContactController {
   @RequestMapping("/delete/{contactId}")
   public String deleteContact(@PathVariable("contactId") String contactId, HttpSession session) {
 
-    // Fetch contact details before deletion so we can show the contact name in the success message.
+    // Fetch contact details before deletion so we can show the contact name in the
+    // success message.
     Contact contact = contactService.getById(contactId);
     String contactName = contact.getName();
 
     // Delete the selected contact from the database.
     contactService.delete(contactId);
     logger.info("Contact {} deteled ", contactId);
-
 
     session.setAttribute("message",
         Message.builder()
@@ -184,6 +186,68 @@ public class ContactController {
             .build());
 
     return "redirect:/user/contacts";
+  }
+
+  // search handler
+
+  @GetMapping("/search")
+  public String searchHandler(
+      @RequestParam("field") String field,
+      @RequestParam("keyword") String value,
+      @RequestParam(value = "page", defaultValue = "0") int page,
+      @RequestParam(value = "size", defaultValue = "10") int size,
+      @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+      @RequestParam(value = "direction", defaultValue = "asc") String direction,
+      Model model, Authentication authentication) {
+
+    logger.info("Searching by {} with value {}", field, value);
+
+    var user = userService.getUserByEmail(Helper.getEmailOfLoggedInUser(authentication));
+
+    Page<Contact> pageContact = null;
+
+    if (field.equalsIgnoreCase("name")) {
+
+      pageContact = contactService.searchByName(
+          value,
+          size,
+          page,
+          sortBy,
+          direction,
+          user);
+
+    } else if (field.equalsIgnoreCase("email")) {
+
+      pageContact = contactService.searchByEmail(
+          value,
+          size,
+          page,
+          sortBy,
+          direction,
+          user);
+
+    } else if (field.equalsIgnoreCase("phoneNumber")) {
+      value = value.trim(); // for removing +
+
+      pageContact = contactService.searchByPhoneNumber(
+          value,
+          size,
+          page,
+          sortBy,
+          direction,
+          user);
+    }
+
+    model.addAttribute("pageContact", pageContact);
+    model.addAttribute("contacts", pageContact.getContent());
+
+    model.addAttribute("isSearch", true);
+    model.addAttribute("field", field);
+    model.addAttribute("keyword", value);
+    model.addAttribute("sortBy", sortBy);
+    model.addAttribute("direction", direction);
+
+    return "user/contacts";
   }
 
 }

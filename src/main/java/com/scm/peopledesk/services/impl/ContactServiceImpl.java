@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -61,12 +62,6 @@ public class ContactServiceImpl implements ContactService {
 	}
 
 	@Override
-	public List<Contact> search(String name, String email, String phoneNumber) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'search'");
-	}
-
-	@Override
 	public List<Contact> getByUserId(String userId) {
 
 		return contactRepo.findByUserId(userId);
@@ -75,7 +70,7 @@ public class ContactServiceImpl implements ContactService {
 	@Override
 	public Page<Contact> getByUser(User user, int page, int size, String sortBy, String direction) {
 
-		Sort sort =direction.equals("desc")?Sort.by(sortBy).descending() :Sort.by(sortBy).ascending();
+		Sort sort = direction.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
 		var pageable = PageRequest.of(page, size);
 
 		return contactRepo.findByUser(user, pageable);
@@ -86,6 +81,69 @@ public class ContactServiceImpl implements ContactService {
 	public List<Contact> getByUser(User user) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'getByUser'");
+	}
+
+	@Override
+	public Page<Contact> searchByName(
+			String nameKeyword,
+			int size,
+			int page,
+			String sortBy,
+			String order,
+			User user) {
+
+		Sort sort = order.equalsIgnoreCase("desc")
+				? Sort.by(sortBy).descending()
+				: Sort.by(sortBy).ascending();
+
+		Pageable pageable = PageRequest.of(page, size, sort);
+
+		return contactRepo.findByUserAndNameContaining(
+				user,
+				nameKeyword,
+				pageable);
+	}
+
+	@Override
+	public Page<Contact> searchByEmail(
+			String emailKeyword,
+			int size,
+			int page,
+			String sortBy,
+			String order,
+			User user) {
+
+		Sort sort = order.equalsIgnoreCase("desc")
+				? Sort.by(sortBy).descending()
+				: Sort.by(sortBy).ascending();
+
+		Pageable pageable = PageRequest.of(page, size, sort);
+
+		return contactRepo.findByUserAndEmailContaining(
+				user,
+				emailKeyword,
+				pageable);
+	}
+
+	@Override
+	public Page<Contact> searchByPhoneNumber(
+			String phoneNumberKeyword,
+			int size,
+			int page,
+			String sortBy,
+			String order,
+			User user) {
+
+		Sort sort = order.equalsIgnoreCase("desc")
+				? Sort.by(sortBy).descending()
+				: Sort.by(sortBy).ascending();
+
+		Pageable pageable = PageRequest.of(page, size, sort);
+
+		return contactRepo.findByUserAndPhoneNumberContaining(
+				user,
+				phoneNumberKeyword,
+				pageable);
 	}
 
 }

@@ -31,27 +31,53 @@
     <!-- show message -->
     <div data-th-replace="~{message :: messagebox}"></div>
 
-    <!-- Search -->
-    <div class="mb-6">
+    <!-- Search & Filter -->
+    <form method="get" th:action="@{/user/contacts/search}" class="mb-6">
 
-      <div class="relative">
+      <div class="flex flex-col md:flex-row gap-3">
 
-        <div class="absolute inset-y-0 start-0 flex items-center ps-3">
+        <!-- Filter -->
+        <select name="field" class="p-3 text-sm border border-gray-300 rounded-lg
+           bg-gray-50 focus:ring-[#1447E6] focus:border-[#1447E6]
+           dark:bg-gray-800 dark:border-gray-700 dark:text-white">
 
-          <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+          <option value="name" th:selected="${field == 'name'}">Name</option>
 
+          <option value="email" th:selected="${field == 'email'}">Email</option>
+
+          <option value="phoneNumber" th:selected="${field == 'phoneNumber'}">
+            Phone Number
+          </option>
+
+        </select>
+
+        <!-- Search Input -->
+        <div class="relative flex-1">
+
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+            <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+          </div>
+
+          <input type="text" name="keyword" placeholder="Search contacts..." th:value="${keyword}" class="block w-full p-3 ps-10 text-sm border border-gray-300 rounded-lg
+           bg-gray-50 focus:ring-[#1447E6] focus:border-[#1447E6]
+           dark:bg-gray-800 dark:border-gray-700 dark:text-white">
         </div>
 
-        <input type="text" placeholder="Search contacts..." class="block w-full p-3 ps-10 text-sm border border-gray-300 rounded-lg
-                       bg-gray-50 focus:ring-blue-500 focus:border-blue-500
-                       dark:bg-gray-800 dark:border-gray-700 dark:text-white">
+        <!-- Search Button -->
+        <button type="submit" class="px-5 py-3 bg-blue-700 text-white rounded-lg
+                   transition flex items-center justify-center gap-2">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+          Search
+
+        </button>
 
       </div>
 
-    </div>
+    </form>
 
     <!-- DESKTOP TABLE -->
-    <div class="hidden md:block">
+    <div class="hidden md:block" th:if="${!pageContact.empty}">
 
       <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700 shadow">
 
@@ -193,37 +219,55 @@
           </tbody>
 
         </table>
-        <!-- pagination component -->
-        <div class="flex justify-center mt-6" th:if="${pageContact.totalPages > 1}">
+        <!-- Pagination -->
+        <div class="flex justify-center mt-6 mb-2" th:if="${pageContact.totalPages > 1}">
 
-          <nav>
-            <ul class="inline-flex items-center gap-1">
+          <nav aria-label="Pagination">
+
+            <ul class="inline-flex items-center gap-2">
 
               <!-- Previous -->
               <li th:if="${!pageContact.first}">
-                <a th:href="@{'/user/contacts?page=' + ${pageContact.number - 1}}"
-                  class="w-9 h-9 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-[#1447E6]">
+                <a th:href="${isSearch}
+            ? @{/user/contacts/search(page=${pageContact.number-1}, field=${field}, keyword=${keyword})}
+            : @{/user/contacts(page=${pageContact.number-1})}" class="w-9 h-9 flex items-center justify-center rounded-lg
+                 bg-gray-800 text-gray-300 hover:bg-[#1447E6]
+                 hover:text-white transition">
+
                   <i class="fa-solid fa-chevron-left"></i>
+
                 </a>
               </li>
 
-              <!-- Pages -->
+              <!-- Page Numbers -->
               <li th:each="i : ${#numbers.sequence(0, pageContact.totalPages - 1)}">
-                <a th:href="@{'/user/contacts?page=' + ${i}}" th:text="${i + 1}"
-                  th:classappend="${i == pageContact.number} ? ' bg-[#1447E6] text-white' : ' bg-gray-800 text-gray-300'"
-                  class="w-9 h-9 flex items-center justify-center rounded-lg">
+
+                <a th:href="${isSearch}
+            ? @{/user/contacts/search(page=${i}, field=${field}, keyword=${keyword})}
+            : @{/user/contacts(page=${i})}" th:text="${i + 1}" th:classappend="${i == pageContact.number}
+            ? ' bg-[#1447E6] text-white'
+            : ' bg-gray-800 text-gray-300 hover:bg-gray-700'"
+                  class="w-9 h-9 flex items-center justify-center rounded-lg transition">
+
                 </a>
+
               </li>
 
               <!-- Next -->
               <li th:if="${!pageContact.last}">
-                <a th:href="@{'/user/contacts?page=' + ${pageContact.number + 1}}"
-                  class="w-9 h-9 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-[#1447E6]">
+                <a th:href="${isSearch}
+            ? @{/user/contacts/search(page=${pageContact.number+1}, field=${field}, keyword=${keyword})}
+            : @{/user/contacts(page=${pageContact.number+1})}" class="w-9 h-9 flex items-center justify-center rounded-lg
+                 bg-gray-800 text-gray-300 hover:bg-[#1447E6]
+                 hover:text-white transition">
+
                   <i class="fa-solid fa-chevron-right"></i>
+
                 </a>
               </li>
 
             </ul>
+
           </nav>
 
         </div>
@@ -233,7 +277,7 @@
     </div>
 
     <!-- MOBILE VIEW -->
-    <div class="grid gap-4 md:hidden">
+    <div class="grid gap-4 md:hidden" th:if="${!pageContact.empty}">
 
       <div th:each="contact : ${pageContact.content}"
         class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow">
@@ -348,54 +392,90 @@
         </div>
 
       </div>
+
+
       <!-- pagination component -->
       <div class="flex justify-center mt-6 mb-2" th:if="${pageContact.totalPages > 1}">
 
-        <nav>
+  <nav>
 
-          <ul class="inline-flex items-center gap-1">
+    <ul class="inline-flex items-center gap-1">
 
-            <!-- Previous -->
-            <li th:if="${!pageContact.first}">
-              <a th:href="@{'/user/contacts?page=' + ${pageContact.number - 1}}" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
-                          rounded-lg bg-gray-800 text-gray-300
-                          hover:bg-[#1447E6] hover:text-white transition">
+      <!-- Previous -->
+      <li th:if="${!pageContact.first}">
+        <a th:href="${isSearch}
+            ? @{/user/contacts/search(page=${pageContact.number-1}, field=${field}, keyword=${keyword})}
+            : @{/user/contacts(page=${pageContact.number-1})}"
+          class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
+                 rounded-lg bg-gray-800 text-gray-300
+                 hover:bg-[#1447E6] hover:text-white transition">
 
-                <i class="fa-solid fa-chevron-left text-xs"></i>
+          <i class="fa-solid fa-chevron-left text-xs"></i>
 
-              </a>
-            </li>
+        </a>
+      </li>
 
-            <!-- Page Numbers -->
-            <li th:each="i : ${#numbers.sequence(0, pageContact.totalPages - 1)}">
+      <!-- Page Numbers -->
+      <li th:each="i : ${#numbers.sequence(0, pageContact.totalPages - 1)}">
 
-              <a th:href="@{'/user/contacts?page=' + ${i}}" th:text="${i + 1}" th:classappend="${i == pageContact.number}
-                   ? ' bg-[#1447E6] text-white'
-                   : ' bg-gray-800 text-gray-300 hover:bg-gray-700'" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
-                          rounded-lg text-sm transition">
+        <a th:href="${isSearch}
+            ? @{/user/contacts/search(page=${i}, field=${field}, keyword=${keyword})}
+            : @{/user/contacts(page=${i})}"
+          th:text="${i + 1}"
+          th:classappend="${i == pageContact.number}
+            ? ' bg-[#1447E6] text-white'
+            : ' bg-gray-800 text-gray-300 hover:bg-gray-700'"
+          class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
+                 rounded-lg text-sm transition">
 
-              </a>
+        </a>
 
-            </li>
+      </li>
 
-            <!-- Next -->
-            <li th:if="${!pageContact.last}">
-              <a th:href="@{'/user/contacts?page=' + ${pageContact.number + 1}}" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
-                          rounded-lg bg-gray-800 text-gray-300
-                          hover:bg-[#1447E6] hover:text-white transition">
+      <!-- Next -->
+      <li th:if="${!pageContact.last}">
+        <a th:href="${isSearch}
+            ? @{/user/contacts/search(page=${pageContact.number+1}, field=${field}, keyword=${keyword})}
+            : @{/user/contacts(page=${pageContact.number+1})}"
+          class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
+                 rounded-lg bg-gray-800 text-gray-300
+                 hover:bg-[#1447E6] hover:text-white transition">
 
-                <i class="fa-solid fa-chevron-right text-xs"></i>
+          <i class="fa-solid fa-chevron-right text-xs"></i>
 
-              </a>
-            </li>
+        </a>
+      </li>
 
-          </ul>
+    </ul>
 
-        </nav>
+  </nav>
 
-      </div>
+</div>
 
     </div>
+
+    <!-- EMPTY STATE -->
+    <div th:if="${pageContact.empty}" class="flex flex-col items-center justify-center py-16">
+
+      <div class="w-24 h-24 rounded-full bg-gray-800 flex items-center justify-center">
+        <i class="fa-solid fa-user-slash text-4xl text-gray-500"></i>
+      </div>
+
+      <h2 class="mt-6 text-2xl font-bold text-white">
+        Contact Not Found
+      </h2>
+
+      <p class="mt-2 text-gray-400">
+        No contacts found for
+        <span th:text="${keyword}" class="font-semibold text-white"></span>
+      </p>
+
+      <a th:href="@{/user/contacts}" class="mt-6 px-5 py-2.5 bg-[#1447E6] rounded-lg text-white">
+        View All Contacts
+      </a>
+
+    </div>
+
 
   </div>
 

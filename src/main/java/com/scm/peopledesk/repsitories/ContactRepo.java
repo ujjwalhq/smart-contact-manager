@@ -12,13 +12,19 @@ import com.scm.peopledesk.entities.Contact;
 import com.scm.peopledesk.entities.User;
 
 @Repository
-public interface ContactRepo extends JpaRepository<Contact,String>{
-      //find the contacts by user
+public interface ContactRepo extends JpaRepository<Contact, String> {
+      // find the contacts by user
 
-      //custom finder method
+      // custom finder method
       Page<Contact> findByUser(User user, Pageable pageable);
 
-      //custom query method to get all contacts of a user
+      // custom query method to get all contacts of a user
       @Query("SELECT c FROM Contact c WHERE c.user.id = :userId")
       List<Contact> findByUserId(String userId);
+
+      Page<Contact> findByUserAndNameContaining(User user, String namekeyword, Pageable pageable);
+
+      Page<Contact> findByUserAndEmailContaining(User user, String emailkeyword, Pageable pageable);
+
+      Page<Contact> findByUserAndPhoneNumberContaining(User user, String phonekeyword, Pageable pageable);
 }
