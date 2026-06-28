@@ -190,7 +190,8 @@
                 <div class="flex justify-center items-center gap-4">
 
                   <!-- View -->
-                  <button class="text-[#1447E6] hover:text-blue-400 hover:scale-110 transition-all duration-200">
+                  <button type="button" th:onclick="viewContact([[${contact.id}]])"
+                    class="text-[#1447E6] hover:text-blue-400 transition">
 
                     <i class="fa-solid fa-eye text-lg"></i>
 
@@ -366,9 +367,10 @@
           <div class="flex items-center gap-4">
 
             <!-- View -->
-            <button class="text-[#1447E6] hover:text-blue-400 hover:scale-110 transition-all duration-200">
+            <button type="button" th:onclick="viewContact([[${contact.id}]])"
+              class="text-[#1447E6] hover:text-blue-400 transition">
 
-              <i class="fa-solid fa-eye"></i>
+              <i class="fa-solid fa-eye text-lg"></i>
 
             </button>
 
@@ -397,60 +399,55 @@
       <!-- pagination component -->
       <div class="flex justify-center mt-6 mb-2" th:if="${pageContact.totalPages > 1}">
 
-  <nav>
+        <nav>
 
-    <ul class="inline-flex items-center gap-1">
+          <ul class="inline-flex items-center gap-1">
 
-      <!-- Previous -->
-      <li th:if="${!pageContact.first}">
-        <a th:href="${isSearch}
+            <!-- Previous -->
+            <li th:if="${!pageContact.first}">
+              <a th:href="${isSearch}
             ? @{/user/contacts/search(page=${pageContact.number-1}, field=${field}, keyword=${keyword})}
-            : @{/user/contacts(page=${pageContact.number-1})}"
-          class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
+            : @{/user/contacts(page=${pageContact.number-1})}" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
                  rounded-lg bg-gray-800 text-gray-300
                  hover:bg-[#1447E6] hover:text-white transition">
 
-          <i class="fa-solid fa-chevron-left text-xs"></i>
+                <i class="fa-solid fa-chevron-left text-xs"></i>
 
-        </a>
-      </li>
+              </a>
+            </li>
 
-      <!-- Page Numbers -->
-      <li th:each="i : ${#numbers.sequence(0, pageContact.totalPages - 1)}">
+            <!-- Page Numbers -->
+            <li th:each="i : ${#numbers.sequence(0, pageContact.totalPages - 1)}">
 
-        <a th:href="${isSearch}
+              <a th:href="${isSearch}
             ? @{/user/contacts/search(page=${i}, field=${field}, keyword=${keyword})}
-            : @{/user/contacts(page=${i})}"
-          th:text="${i + 1}"
-          th:classappend="${i == pageContact.number}
+            : @{/user/contacts(page=${i})}" th:text="${i + 1}" th:classappend="${i == pageContact.number}
             ? ' bg-[#1447E6] text-white'
-            : ' bg-gray-800 text-gray-300 hover:bg-gray-700'"
-          class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
+            : ' bg-gray-800 text-gray-300 hover:bg-gray-700'" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
                  rounded-lg text-sm transition">
 
-        </a>
+              </a>
 
-      </li>
+            </li>
 
-      <!-- Next -->
-      <li th:if="${!pageContact.last}">
-        <a th:href="${isSearch}
+            <!-- Next -->
+            <li th:if="${!pageContact.last}">
+              <a th:href="${isSearch}
             ? @{/user/contacts/search(page=${pageContact.number+1}, field=${field}, keyword=${keyword})}
-            : @{/user/contacts(page=${pageContact.number+1})}"
-          class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
+            : @{/user/contacts(page=${pageContact.number+1})}" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center
                  rounded-lg bg-gray-800 text-gray-300
                  hover:bg-[#1447E6] hover:text-white transition">
 
-          <i class="fa-solid fa-chevron-right text-xs"></i>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
 
-        </a>
-      </li>
+              </a>
+            </li>
 
-    </ul>
+          </ul>
 
-  </nav>
+        </nav>
 
-</div>
+      </div>
 
     </div>
 
@@ -475,6 +472,8 @@
       </a>
 
     </div>
+
+    
 
 
   </div>
