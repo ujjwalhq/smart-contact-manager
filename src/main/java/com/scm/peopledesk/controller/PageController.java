@@ -111,6 +111,7 @@ public class PageController {
             user.setPassword(userForm.getPassword());
             user.setAbout(userForm.getAbout());
             user.setPhoneNumber(userForm.getPhoneNumber());
+            user.setEnabled(false);
             user.setProfilePic("https://img.icons8.com/nolan/1200/user-default.jpg");
 
             User savedUser = userService.saveUser(user);
