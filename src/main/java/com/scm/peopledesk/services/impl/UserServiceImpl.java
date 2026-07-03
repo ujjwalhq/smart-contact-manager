@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.scm.peopledesk.entities.User;
 import com.scm.peopledesk.helpers.AppConstants;
 import com.scm.peopledesk.helpers.Helper;
+import com.scm.peopledesk.helpers.DuplicateUserException;
 import com.scm.peopledesk.helpers.ResourceNotFoundException;
 import com.scm.peopledesk.repsitories.UserRepo;
 import com.scm.peopledesk.services.EmailService;
@@ -38,6 +39,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User saveUser(User user) {
+
+    // Throw exception when user is duplicate
+    if (userRepo.existsByEmail(user.getEmail())) {
+      throw new DuplicateUserException("An account with this email already exists.");
+    }
+
     // user id : have to generate
     String userId = UUID.randomUUID().toString();
     user.setUserId(userId);
@@ -51,7 +58,6 @@ public class UserServiceImpl implements UserService {
 
     logger.info(user.getProvider().toString());
 
-
     String emailToken = UUID.randomUUID().toString();
 
     user.setEmailToken(emailToken);
@@ -60,12 +66,11 @@ public class UserServiceImpl implements UserService {
 
     String emailLink = baseUrl + "/auth/verify-email?token=" + emailToken;
 
-    String emailBody =
-    "Hi " + savedUser.getName() + ",\n\n" +
-    "Welcome to PeopleDesk!\n\n" +
-    "Thank you for creating your account.\n\n" +
-    "To activate your account, please verify your email address by clicking the link below:\n\n" +
-    emailLink;
+    String emailBody = "Hi " + savedUser.getName() + ",\n\n" +
+        "Welcome to PeopleDesk!\n\n" +
+        "Thank you for creating your account.\n\n" +
+        "To activate your account, please verify your email address by clicking the link below:\n\n" +
+        emailLink;
 
     emailService.sendEmail(
         savedUser.getEmail(),

@@ -17,6 +17,7 @@ import com.scm.peopledesk.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import com.scm.peopledesk.helpers.DuplicateUserException;
 
 @Controller
 public class PageController {
@@ -24,7 +25,7 @@ public class PageController {
     @Autowired
     private UserService userService;
 
-    @GetMapping({"/", "/home"})
+    @GetMapping({ "/", "/home" })
     public String home(Model model) {
         model.addAttribute("name", "Ujjwal");
         model.addAttribute("email", "ujjwalhq@gmail.com");
@@ -114,16 +115,32 @@ public class PageController {
             user.setEnabled(false);
             user.setProfilePic("https://img.icons8.com/nolan/1200/user-default.jpg");
 
-            User savedUser = userService.saveUser(user);
-            System.out.print("User Saved");
+            try {
 
-            // message = "Registration Successful"
+                userService.saveUser(user);
+                System.out.print("User Saved");
 
-            // add message
+                // message = "Registration Successful"
 
-            Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
+                // add message
 
-            session.setAttribute("message", message);
+                session.setAttribute(
+                        "message",
+                        Message.builder()
+                                .content("Registration Successful! Please verify your email.")
+                                .type(MessageType.green)
+                                .build());
+            } catch (DuplicateUserException e) {
+                session.setAttribute("message",
+                        Message.builder()
+                                .content(e.getMessage())
+                                .type(MessageType.red)
+                                .build());
+
+                // redirect to login page
+
+                return "signup";
+            }
 
             // redirect to login page
 
