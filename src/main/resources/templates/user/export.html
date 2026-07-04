@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      th:replace="~{user/user_base :: parent(~{::#content},'Import & Export')}">
+
+<div id="content">
+
+    <div class="max-w-5xl mx-auto px-5 py-6">
+
+        <!-- Heading -->
+
+        <div class="mb-8">
+
+            <h1 class="text-4xl font-bold text-white">
+                Export Contacts
+            </h1>
+
+            <p class="text-gray-400 mt-2">
+                Manage your contacts by exporting CSV files.
+            </p>
+
+        </div>
+
+        <!-- Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+    <!-- Export Card -->
+    <div
+        class="bg-slate-800 border border-slate-700 rounded-2xl p-8 flex flex-col justify-between hover:border-green-500 transition-all duration-300 min-h-[340px]">
+
+        <div>
+
+            <div
+                class="w-16 h-16 rounded-xl bg-green-500/20 flex items-center justify-center">
+
+                <i class="fa-solid fa-file-csv text-4xl text-green-400"></i>
+
+            </div>
+
+            <h2 class="text-3xl font-bold text-white mt-6">
+                Export Contacts
+            </h2>
+
+            <p class="text-gray-400 mt-4 leading-7">
+                Download all your saved contacts as a CSV file. Open it in
+                Excel, Google Sheets, or import it into another application
+                whenever you need.
+            </p>
+
+        </div>
+
+        <div class="mt-8">
+
+            <a th:href="@{/user/contacts/export}"
+                class="inline-flex items-center gap-3 px-6 py-3 rounded-xl
+                bg-green-600 hover:bg-green-700 transition text-white font-semibold">
+
+                <i class="fa-solid fa-download"></i>
+
+                Export CSV
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Import Card
+    <div
+        class="bg-slate-800 border border-slate-700 rounded-2xl p-8 flex flex-col justify-between hover:border-blue-500 transition-all duration-300 min-h-[340px]">
+
+        <div>
+
+            <div
+                class="w-16 h-16 rounded-xl bg-blue-500/20 flex items-center justify-center">
+
+                <i class="fa-solid fa-file-import text-4xl text-blue-400"></i>
+
+            </div>
+
+            <h2 class="text-3xl font-bold text-white mt-6">
+                Import Contacts
+            </h2>
+
+            <p class="text-gray-400 mt-4 leading-7">
+                Restore your contacts from a CSV file in a single click.
+                Support for CSV import will be available in the next update.
+            </p>
+
+        </div>
+
+        <div class="mt-8">
+
+            <button disabled
+                class="px-6 py-3 rounded-xl bg-slate-700 text-gray-300 font-semibold cursor-not-allowed">
+
+                🚀 Coming Soon
+
+            </button>
+
+        </div> -->
+
+    </div>
+
+</div>
+
+    </div>
+
+</div>
+
+</html>
