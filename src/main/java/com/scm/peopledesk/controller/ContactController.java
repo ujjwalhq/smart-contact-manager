@@ -25,8 +25,13 @@ import com.scm.peopledesk.helpers.Helper;
 import com.scm.peopledesk.helpers.Message;
 import com.scm.peopledesk.helpers.MessageType;
 import com.scm.peopledesk.services.ContactService;
+import com.scm.peopledesk.services.CsvService;
 import com.scm.peopledesk.services.ImageService;
 import com.scm.peopledesk.services.UserService;
+import com.scm.peopledesk.services.CsvService;
+import java.io.IOException;
+import java.util.List;
+import jakarta.servlet.http.HttpServletResponse;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -45,6 +50,9 @@ public class ContactController {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private CsvService csvService;
 
   @RequestMapping("/add")
   // add contact page: handler
@@ -248,6 +256,28 @@ public class ContactController {
     model.addAttribute("direction", direction);
 
     return "user/contacts";
+  }
+
+  // Export Contacts
+  @GetMapping("/export")
+  public void exportContacts(
+      Authentication authentication,
+      HttpServletResponse response) throws IOException {
+
+    String username = Helper.getEmailOfLoggedInUser(authentication);
+
+    User user = userService.getUserByEmail(username);
+
+    List<Contact> contacts = contactService.getByUser(user);
+
+    response.setContentType("text/csv");
+    response.setHeader(
+        "Content-Disposition",
+        "attachment; filename=contacts.csv");
+
+    csvService.exportContacts(
+        contacts,
+        response.getWriter());
   }
 
 }

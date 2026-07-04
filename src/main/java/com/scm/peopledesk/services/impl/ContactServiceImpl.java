@@ -77,11 +77,10 @@ public class ContactServiceImpl implements ContactService {
 
 	}
 
-	@Override
-	public List<Contact> getByUser(User user) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getByUser'");
-	}
+@Override
+public List<Contact> getByUser(User user) {
+    return contactRepo.findByUser(user);
+}
 
 	@Override
 	public Page<Contact> searchByName(
