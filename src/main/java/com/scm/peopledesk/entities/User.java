@@ -56,15 +56,16 @@ public class User implements UserDetails {
     // SELF, GOOGLE, FACEBOOK, TWITTER, LINKEDIN, GITHUB
     private Providers provider = Providers.SELF;
     private String providerUserId;
-
+    
     // add more fields if needed
-
+    
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Contact> contacts = new ArrayList<>();
-
+    
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> rolesList = new ArrayList<>();
-
+    
+    private String cloudinaryImagePublicId;
     private String emailToken;
 
     @Override

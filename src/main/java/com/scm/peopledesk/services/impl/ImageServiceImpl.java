@@ -25,8 +25,6 @@ public class ImageServiceImpl implements ImageService {
   public String uploadImage(MultipartFile profileImage, String filename) {
     // write code for image uploading
 
-    
-
     try {
 
       byte[] data = new byte[profileImage.getInputStream().available()];
@@ -60,6 +58,23 @@ public class ImageServiceImpl implements ImageService {
 
         )
         .generate(publicId);
+  }
+
+  @Override
+  public void deleteImage(String publicId) {
+
+    try {
+
+      cloudinary.uploader().destroy(
+          publicId,
+          ObjectUtils.emptyMap());
+
+    } catch (IOException e) {
+
+      e.printStackTrace();
+
+    }
+
   }
 
 }

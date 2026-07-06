@@ -103,6 +103,8 @@ public class UserServiceImpl implements UserService {
     user2.setProvider(user.getProvider());
     user2.setProviderUserId(user.getProviderUserId());
 
+    
+
     // save the user in database
 
     User save = userRepo.save(user2);

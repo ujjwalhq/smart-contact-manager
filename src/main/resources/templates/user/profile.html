@@ -1,14 +1,109 @@
 <!DOCTYPE html>
-<html lang="en"
-      th:replace="~{user/user_base :: parent(~{::#content}, 'Profile')}">
+<html lang="en" th:replace="~{user/user_base :: parent(~{::#content}, 'Profile')}">
 
 <body>
 
-<div id="content">
+      <div id="content" class="p-6">
 
-   
+            <div class="max-w-4xl mx-auto">
 
-</div>
+                  <!-- Heading -->
+                  <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-white">
+                              My Profile
+                        </h1>
+
+                        <p class="text-gray-400 mt-2">
+                              Manage your personal information.
+                        </p>
+                  </div>
+
+                  <!-- Message Box -->
+                    <div th:replace="~{message :: messagebox}"></div>
+
+                  <!-- Profile Card -->
+                  <div class="bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+
+                        <!-- Top Section -->
+                        <div class="flex flex-col items-center py-8 px-6 border-b border-gray-700">
+
+                              <img th:src="${loggedInUser.profilePic}" alt="Profile"
+                                    class="w-32 h-32 rounded-full object-cover border-4 border-blue-500 shadow">
+
+                              <h2 class="text-2xl font-bold text-white mt-5" th:text="${loggedInUser.name}">
+                                    Ujjwal Singh
+                              </h2>
+
+                              <p class="text-gray-400 mt-1" th:text="${loggedInUser.email}">
+                                    demo@gmail.com
+                              </p>
+
+                        </div>
+
+                        <!-- Details -->
+                        <div class="p-8 space-y-8">
+
+                              <!-- Name -->
+                              <div>
+                                    <label class="block text-sm text-gray-400 mb-2">
+                                          Full Name
+                                    </label>
+
+                                    <div class="bg-gray-900 rounded-lg px-4 py-3 text-white"
+                                          th:text="${loggedInUser.name}">
+                                    </div>
+                              </div>
+
+                              <!-- Email -->
+                              <div>
+                                    <label class="block text-sm text-gray-400 mb-2">
+                                          Email Address
+                                    </label>
+
+                                    <div class="bg-gray-900 rounded-lg px-4 py-3 text-white"
+                                          th:text="${loggedInUser.email}">
+                                    </div>
+                              </div>
+
+                              <!-- Phone -->
+                              <div>
+                                    <label class="block text-sm text-gray-400 mb-2">
+                                          Phone Number
+                                    </label>
+
+                                    <div class="bg-gray-900 rounded-lg px-4 py-3 text-white"
+                                          th:text="${loggedInUser.phoneNumber}">
+                                    </div>
+                              </div>
+
+                              <!-- About -->
+                              <div>
+                                    <label class="block text-sm text-gray-400 mb-2">
+                                          About
+                                    </label>
+
+                                    <div class="bg-gray-900 rounded-lg px-4 py-4 text-white min-h-[100px]"
+                                          th:text="${loggedInUser.about}">
+                                    </div>
+                              </div>
+
+                              <!-- Button -->
+                              <a th:href="@{/user/profile/edit}" class="px-6 py-3 bg-blue-600 rounded-lg text-white">
+
+                                    <i class="fa-solid fa-user-pen mr-2"></i>
+
+                                    Edit Profile
+
+                              </a>
+
+                        </div>
+
+                  </div>
+
+            </div>
+
+      </div>
 
 </body>
+
 </html>
